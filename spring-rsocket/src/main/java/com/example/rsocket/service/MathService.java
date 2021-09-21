@@ -1,5 +1,6 @@
 package com.example.rsocket.service;
 
+import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.stereotype.Service;
 
 import com.example.rsocket.dto.ChartResponseDto;
@@ -12,6 +13,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class MathService {
 	
+	RSocketRequester requester;
+	//ff
 	public Mono<Void> print(Mono<ComputationRequestDto> requestDtoMono){
 		return requestDtoMono
 					.doOnNext(System.out::println)
@@ -36,6 +39,13 @@ public class MathService {
 		return requestDtoFlux
 					.map(ComputationRequestDto::getInput)
 					.map(i -> new ChartResponseDto(i, (i * i) + 1));
+	}
+	
+	public void validationtest() {
+		this.requester.route("math.validation.double.31")
+						.retrieveMono(Integer.class)
+						.onErrorReturn(Integer.MIN_VALUE)
+						.doOnNext(System.out::println);
 	}
 	
 }
