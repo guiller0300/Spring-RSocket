@@ -45,7 +45,7 @@ public class RSocketConnectionController {
 		// String clientIdFixed = clientId.replace("\"", "");
 		log.info("Entro");
 		requester.rsocket().onClose().doFirst(() -> {
-			log.info("%s just disconnected", clientId);
+			log.info("{} just disconnected", clientId);
 			// removeRequester(clientIdFixed);
 			log.info("Client: {} CONNECTED.", clientId);
 			requesterList.add(requester);

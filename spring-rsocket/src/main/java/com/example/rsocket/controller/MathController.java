@@ -1,5 +1,7 @@
 package com.example.rsocket.controller;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,10 @@ public class MathController {
 	
 	@Autowired
 	private MathService service;
+	
+	public MathController(MathService service) {
+		this.service = service;
+	}
 	
 	@MessageMapping("math.service.print")
 	public Mono<Void> print(Mono<ComputationRequestDto> requestDtoMono) {
@@ -36,7 +42,6 @@ public class MathController {
 	@MessageMapping("math.service.chart")
 	public Flux<ChartResponseDto> chartStream(Flux<ComputationRequestDto> requestDtoFlux){
 		return this.service.chartStream(requestDtoFlux);
-	}
-	
+	}	
 	
 }
